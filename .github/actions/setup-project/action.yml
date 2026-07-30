@@ -1,0 +1,16 @@
+name: "Setup Project"
+description: "Install pnpm, setup Node, install dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: pnpm/action-setup@v6
+      with:
+        cache: true
+
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: package.json
+
+    - run: pnpm install --frozen-lockfile
+      shell: bash
