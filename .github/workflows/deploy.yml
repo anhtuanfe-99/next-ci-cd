@@ -1,41 +1,23 @@
-name: Deploy Production
+# .github/workflows/deploy.yml
+name: Deploy
 
 on:
   push:
     branches: [main]
-
-permissions:
-  contents: read
 
 concurrency:
   group: production-deploy
   cancel-in-progress: false
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-project
-      - run: pnpm lint
-
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-project
-      - run: pnpm format:check
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup-project
-      - run: pnpm typecheck
+  checks:
+    uses: ./.github/workflows/checks.yml
 
   deploy:
-    needs: [lint, format, typecheck]
+    needs: checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     environment:
       name: production
       url: ${{ steps.deploy.outputs.production_url }}
