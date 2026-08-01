@@ -1,20 +1,24 @@
-name: Preview Deploy
+# .github/workflows/preview.yml
+name: Preview
 
 on:
   pull_request:
     branches: [main]
-
-permissions:
-  contents: read
-  pull-requests: write
 
 concurrency:
   group: preview-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
+  checks:
+    uses: ./.github/workflows/checks.yml
+
   deploy-preview:
+    needs: checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-project
