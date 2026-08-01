@@ -29,8 +29,15 @@ jobs:
       - uses: ./.github/actions/setup-project
       - run: pnpm typecheck
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-project
+      - run: pnpm test
+
   build:
-    needs: [lint, format, typecheck]
+    needs: [lint, format, typecheck, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
