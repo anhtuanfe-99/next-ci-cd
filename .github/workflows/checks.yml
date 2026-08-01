@@ -37,7 +37,7 @@ jobs:
       - run: pnpm test
 
   build:
-    needs: [lint, format, typecheck]
+    needs: [lint, format, typecheck, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
