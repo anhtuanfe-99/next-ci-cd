@@ -9,6 +9,12 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     globals: true,
+    exclude: [
+      '**/node_modules/**',
+      '**/e2e/**',
+      '**/tests/**', // ← Playwright's scaffolded folder
+      '**/*.spec.ts', // ← Playwright's naming convention
+    ],
   },
   resolve: {
     alias: {
