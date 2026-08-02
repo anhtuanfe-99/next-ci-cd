@@ -65,7 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-project
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps
 
       - name: Run E2E tests against preview
         env:
